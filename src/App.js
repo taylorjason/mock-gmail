@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import './App.css';
 import { EmailContext } from './EmailContext';
+import ListView from './ListView';
 
 class App extends Component {
   constructor(props) {
@@ -10,28 +11,65 @@ class App extends Component {
       detailsView: false,
       listView: false,
       composeView: false,
-      listViewEmails: []
+      listViewEmails: [],
+      currentSearch: '',
+      composeData: {
+        recipient: '',
+        sender: 'JayDizzle@InTheHouse.co',
+        subject: '',
+        message: ''
+      }
     };
   }
   handleChange(event) {
     this.setState({
-      currentSearch: {
-        name: event.target.value
-      }
+      currentSearch: event.target.value
     });
+    // console.log(this.state.currentSearch);
   }
 
   handleSearch(event) {
-    console.log('currentSearch: ', this.state.currentSearch.name);
-    fetch('https://pokeapi.co/api/v2/pokemon/' + this.state.currentSearch.name)
+    console.log('currentSearch: ', this.state.currentSearch);
+    if (this.state.currentSearch === '') {
+      this.fetchAllEmail();
+      return;
+    }
+    fetch('http://localhost:3001/search/?query=' + this.state.currentSearch)
       .then((response) => response.json()) // turn the response into json
       .then((json) => {
+        console.log(json);
         this.setState({
-          currentPokemon: json || { name: this.state.currentSearch.name } //#REFACTOR: Use catch instead
+          listViewEmails: json
         });
       })
-      .then(() => this.setState({ render: 'Search' }));
+      .then(() => this.setState({ render: 'viewList' }));
     event.preventDefault();
+  }
+
+  componentDidMount() {
+    this.fetchAllEmail();
+  }
+
+  fetchAllEmail() {
+    fetch('http://localhost:3001/emails')
+      .then((response) => response.json()) // turn the response into json
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          listViewEmails: json,
+          currentSearch: ''
+        });
+      })
+      .then(() => this.setState({ render: 'viewList' }));
+  }
+
+  _renderSubComp() {
+    switch (this.state.render) {
+      case 'ListView':
+        return <ListView />;
+      default:
+        return <ListView />;
+    }
   }
   render() {
     return (
@@ -40,14 +78,16 @@ class App extends Component {
           value={{
             state: this.state,
             handleChange: this.handleChange.bind(this),
-            handleSearch: this.handleSearch.bind(this)
+            handleSearch: this.handleSearch.bind(this),
+            fetchAllEmail: this.fetchAllEmail.bind(this)
           }}
         >
           <header className="">
-            <NavBar />
+            <NavBar onClick={this.fetchAllEmail.bind(this)} />
           </header>
           <div className="main">
             <h1> This is the main body area</h1>
+            {this._renderSubComp()}
           </div>
         </EmailContext.Provider>
       </div>

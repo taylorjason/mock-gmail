@@ -40,8 +40,9 @@ body {
   }
 }
 
-.listRow * {
+.listItem * {
   display: inline-block;
+  margin: 10px 15px;
 }
 nav * {
   display: inline-block;

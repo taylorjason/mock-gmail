@@ -1,8 +1,8 @@
 import React from 'react';
-// import { PokemonContext } from './PokemonContext';
+import { EmailContext } from './EmailContext';
 
 class Search extends React.Component {
-  //   static contextType = PokemonContext;
+  static contextType = EmailContext;
   render() {
     return (
       <div className="Search">
@@ -13,6 +13,7 @@ class Search extends React.Component {
               type="text"
               name="name"
               onChange={this.context.handleChange}
+              value={this.context.state.currentSearch}
             />
           </label>
           <input type="submit" value="Search" />
