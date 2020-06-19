@@ -29,7 +29,6 @@ class App extends Component {
     this.setState({
       currentSearch: event.target.value
     });
-    // console.log(this.state.currentSearch);
   }
 
   handleSearch(event) {
@@ -66,22 +65,6 @@ class App extends Component {
       })
       .then(() => this.setState({ render: 'ListView' }));
   }
-
-  handleSend() {
-    fetch('http://localhost:3001/emails', {
-      method: 'POST',
-      body: JSON.stringify(this.composeData)
-    })
-      .then((response) => response.json()) // turn the response into json
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          sendResponse: json
-        });
-      })
-      .then(() => this.setState({ render: 'Compose' }));
-  }
-
   handleViewDetails(emailId) {
     this.setState({ detailsViewID: emailId, render: 'detailsView' });
   }
@@ -111,7 +94,7 @@ class App extends Component {
             handleSearch: this.handleSearch.bind(this),
             handleClick: this.handleClick.bind(this),
             fetchAllEmail: this.fetchAllEmail.bind(this),
-            handleSend: this.handleSend.bind(this),
+            // handleSend: this.handleSend.bind(this),
             handleViewDetails: this.handleViewDetails.bind(this)
           }}
         >
