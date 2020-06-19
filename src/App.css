@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+body {
+  background-color: lightslategrey;
+}
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +38,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.listRow * {
+  display: inline-block;
+}
+nav * {
+  display: inline-block;
+  margin: 10px 10px;
+}
+
+button {
+  background-color: blue;
+  color: white;
+}
+
+.main {
+  border: solid red;
 }
