@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { EmailContext } from './EmailContext';
 
-export default function ListItem(props) {
-  return (
-    <div className="listItem">
-      <h3>{props.email.sender}</h3>
-      <p>{props.email.subject}</p>
-    </div>
-  );
+export default class ListItem extends Component {
+  static contextType = EmailContext;
+  render() {
+    return (
+      <div className="listItem">
+        <h3>{this.props.email.sender}</h3>
+        <p>{this.props.email.subject}</p>
+        {/* <p>{props.email.message.slice(0, 28)}</p> */}
+        <button
+          onClick={this.context.handleViewDetails.bind(
+            this,
+            this.props.email.id
+          )}
+        >
+          View
+        </button>
+      </div>
+    );
+  }
 }

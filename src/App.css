@@ -55,5 +55,9 @@ button {
 }
 
 .main {
-  border: solid red;
+  border-top: solid lightgray;
+}
+
+.compose {
+  margin: 15px auto;
 }
