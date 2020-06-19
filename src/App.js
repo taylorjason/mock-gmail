@@ -69,7 +69,9 @@ class App extends Component {
     this.setState({ detailsViewID: emailId, render: 'detailsView' });
   }
   handleClick(view) {
-    this.fetchAllEmail();
+    if (view === 'ListView') {
+      this.fetchAllEmail();
+    }
     this.setState({ render: view });
   }
 
