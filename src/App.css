@@ -61,3 +61,7 @@ button {
 .compose {
   margin: 15px auto;
 }
+
+.compose input {
+  margin: 5px 10px;
+}

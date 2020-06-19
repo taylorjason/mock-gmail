@@ -33,9 +33,12 @@ export default class Compose extends Component {
       'handleSend Called with composeData of',
       JSON.stringify(this.state.composeData)
     );
-    fetch('http://localhost:3001/send/', {
+    fetch('http://localhost:3001/send', {
       method: 'POST',
-      body: JSON.stringify(this.composeData)
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.composeData)
     })
       .then((response) => response.json()) // turn the response into json
       .then((json) => {
@@ -77,6 +80,7 @@ export default class Compose extends Component {
                 onChange={this.handleInputChange}
               />
             </label>
+            <br />
             <input type="submit" value="Send" />
           </form>
         </div>
